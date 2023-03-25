@@ -47,6 +47,23 @@ class garage():
     
     def leaveGarage(self):
         #- If the ticket has been paid, display a message of "Thank You, have a nice day"
+        ticketNumber=input("Enter your ticket number? ")
+        
+        if self.currentTicket[ticketNumber]==True:
+            print("Thank you, have a great day. Drive safe. Don't play with phone")
+            self.tickets.append(ticketNumber)
+            self.spaces[int(ticketNumber)-1]=0
+            self.currentTicket[ticketNumber]=False
+            
+            
+        elif self.currentTicket[ticketNumber]==False:
+            print("Please pay for parking rate")
+            self.payForParking()
+            
+        else:
+           print("something is not valid")            
+            
+            
         #- If the ticket has not been paid, display an input prompt for payment
         #- Once paid, display message "Thank you, have a nice day!"
         #- Update parkingSpaces list to increase by 1 (meaning add to the parkingSpaces list)
