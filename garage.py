@@ -1,38 +1,36 @@
-class garage():
+class Garage():
 
-    spaces = [0, 0, 0, 0, 0]
-    tickets = [1, 2, 3, 4, 5]
-    currentTicket = {
-        "1": False,
-        "2": False,
-        "3": False,
-        "4": False,
-        "5": False,
-        }
-
-    def __init__(self, spaces, ticket, currentTicket):
-        self.spaces = spaces #list
-        self.tickets = ticket #list
-        self.currentTicket = currentTicket
+    def __init__(self):
+        self.spaces = 5
+        self.currentTicket = {
+            "1": False,
+            "2": False,
+            "3": False,
+            "4": False,
+            "5": False,
+            }
 
     def takeTicket(self):
         #- This should decrease the amount of tickets available by 1
         #- This should decrease the amount of parkingSpaces available by 1
-        for space in spaces:
-            if space == 0:
 
-                self.tickets = self.tickets.remove(ticket)
-                self.spaces = self.spaces.remove(spaces)
+        if self.spaces <= 5 and self.spaces > 0:
+            print(f"You have ticket number {self.spaces}.\n")
+            self.spaces -= 1
 
-            else:
-                print("Garage is full. Go away. Come back another day.")
-                return
+        else:
+            print("Garage is full. Go away. Come back another day.")
+            return
 
     def payForParking(self):
-        ticketNumber = int(input("Enter ticket numer."))
-        if ticketNumber in self.currenTicket.keys():
-            payment = int(input("Please enter payment"))
+        ticketNumber = input("Enter ticket numer. ")
+        if ticketNumber in self.currentTicket.keys():
+            payment = int(input("Please enter payment "))
             if payment == 20:
+                self.currentTicket[ticketNumber] = True
+                print("Your ticket has been paid! You have 15 minutes to leave.")
+            elif payment > 20:
+                print("Thanks for the extra cash!")
                 self.currentTicket[ticketNumber] = True
                 print("Your ticket has been paid! You have 15 minutes to leave.")
             else:
@@ -47,21 +45,20 @@ class garage():
     
     def leaveGarage(self):
         #- If the ticket has been paid, display a message of "Thank You, have a nice day"
-        ticketNumber=input("Enter your ticket number? ")
+        ticketNumber=input("\nEnter your ticket number? ")
         
         if self.currentTicket[ticketNumber]==True:
-            print("Thank you, have a great day. Drive safe. Don't play with phone")
-            self.tickets.append(ticketNumber)
-            self.spaces[int(ticketNumber)-1]=0
+            print("Thank you, have a great day. Drive safe. Don't play with ya phone fool!\n")
+            self.spaces =+ 1
             self.currentTicket[ticketNumber]=False
             
             
         elif self.currentTicket[ticketNumber]==False:
-            print("Please pay for parking rate")
+            print("Please pay for parking rate!\n")
             self.payForParking()
             
         else:
-           print("something is not valid")            
+           print("Something is not valid.")            
             
             
         #- If the ticket has not been paid, display an input prompt for payment
@@ -70,7 +67,27 @@ class garage():
         #- Update tickets list to increase by 1 (meaning add to the tickets list)
 
 
-car1 = garage(spaces, tickets, currentTicket)
-garage.takeTicket()
-garage.payForParking()
-garage.leaveGarage()
+class Kiosk():
+    parking = Garage()
+    @classmethod
+    def main(self):
+        while True:
+            decision = input("What would you like to do? 1 = [take ticket] / 2 = [pay] / 3 = [leave Garage] ")
+            if decision == "close":
+                break
+
+            elif decision == "1":
+                self.parking.takeTicket()
+
+            elif decision == "2":
+                self.parking.payForParking()
+
+            elif decision == "3":
+                self.parking.leaveGarage()
+
+            else:
+                print("Not a valid command. Try again.")
+            
+
+if __name__ == "__main__":
+    Kiosk.main()
